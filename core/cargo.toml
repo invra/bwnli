@@ -1,0 +1,13 @@
+[[bin]]
+name = "bwnli"
+path = "src/main.rs"
+
+[package]
+name = "bitwig_nli"
+version = "0.1.0"
+description = "A tool to get Novation LPProMk3 MIDI Info to a Website for OBS Scene"
+license = "Unlicense"
+readme = "README.md"
+keywords = ["utility"]
+edition = "2024"
+
