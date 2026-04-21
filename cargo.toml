@@ -1,0 +1,8 @@
+[workspace]
+resolver = "3"
+members = ["core"]
+default-members = ["core"]
+
+[workspace.package]
+publish = false
+edition = "2024"

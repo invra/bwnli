@@ -1,0 +1,7 @@
+# Gradle stuff
+build/
+.gradle/
+
+
+# Rust stuff
+target/
