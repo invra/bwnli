@@ -1,0 +1,7 @@
+[servers.websockets]
+ip = "127.0.0.1"
+port = 55553
+
+[servers.https]
+ip = "127.0.0.1"
+port = 55554
