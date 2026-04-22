@@ -2,11 +2,17 @@
 name = "bwnli"
 path = "src/main.rs"
 
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+config.workspace = true
+tungstenite.workspace = true
+
 [package]
 name = "bitwig_nli"
 version = "0.1.0"
 description = "A tool to get Novation LPProMk3 MIDI Info to a Website for OBS Scene"
-license = "Unlicense"
+license = "Apache-2.0"
 readme = "README.md"
 keywords = ["utility"]
 edition = "2024"
