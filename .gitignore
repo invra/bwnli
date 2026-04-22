@@ -2,6 +2,8 @@
 build/
 .gradle/
 
-
 # Rust stuff
 target/
+
+# Config files
+config.toml
