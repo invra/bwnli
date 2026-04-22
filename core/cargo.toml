@@ -6,6 +6,8 @@ path = "src/main.rs"
 axum.workspace = true
 tokio.workspace = true
 config.workspace = true
+tracing.workspace = true
+utility.workspace = true
 tungstenite.workspace = true
 
 [package]

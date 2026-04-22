@@ -2,6 +2,7 @@
 //! this is bad code, I know.
 
 use serde::Deserialize;
+use tracing::warn;
 
 #[derive(Debug, Deserialize, Default)]
 struct RawConnConfig {
@@ -92,5 +93,15 @@ pub fn load_config() -> Config {
         .and_then(|s| toml::from_str(&s).ok())
         .unwrap_or_default();
 
-    raw.into()
+    let config: Config = raw.into();
+
+    if config.servers.https.port == config.servers.websockets.port {
+        warn!(
+            title = "HTTPS and WebSockets are binded to the same port",
+            description = "This warning can only be omitted by
+                switching ports for HTTP or WebSockets."
+        );
+    }
+
+    config
 }

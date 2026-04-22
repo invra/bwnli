@@ -1,4 +1,5 @@
 use std::{io::ErrorKind, net::TcpListener, thread::spawn};
+use tracing::{error, info};
 
 use tungstenite::{
     accept_hdr,
@@ -25,16 +26,20 @@ pub async fn start(address: Addr) -> Result<(), ()> {
     match server {
         // Mask over server current server variable
         Ok(server) => {
-            println!("Binded to {}", &target);
+            info!("Binded to address {}.", &target);
             for stream in server.incoming() {
                 spawn(move || {
                     let callback = |req: &Request, mut response: Response| {
-                        println!("Received a new ws handshake");
-                        println!("The request's path is: {}", req.uri().path());
-                        println!("The request's headers are:");
-                        for (header, _value) in req.headers() {
-                            println!("* {header}");
-                        }
+                        info!(
+                            title = "Received a new ws handshake",
+                            description = format!("path: {}\nheaders:\n{}", req.uri().path(), {
+                                let mut acc = String::new();
+                                for (header, _value) in req.headers() {
+                                    acc += &format!("- {header}\n");
+                                }
+                                acc
+                            })
+                        );
 
                         let headers = response.headers_mut();
                         headers.append("MyCustomHeader", ":)".parse().unwrap());
@@ -54,27 +59,32 @@ pub async fn start(address: Addr) -> Result<(), ()> {
             Ok(())
         }
         Err(err) if err.kind() == ErrorKind::AddrInUse => {
-            eprintln!("Binding is already in use.");
+            error!(
+                title = format!("tcp://{}:{} is already in use.", address.ip, address.port),
+                description = "Try killing already used binds or\nFind a non-used port"
+            );
             Ok(())
         }
         Err(err) if err.kind() == ErrorKind::AddrNotAvailable => {
-            eprintln!("Binding is not available.");
+            error!("tcp://{}:{} is not available.", address.ip, address.port);
             Ok(())
         }
         Err(err) if err.kind() == ErrorKind::PermissionDenied => {
-            eprintln!("Binding is not allowed.");
-            eprintln!("You can try with doas/sudo.");
+            error!(
+                title = "Permission for Binding is denied.",
+                description = "Try running this program with\nelevated privileges."
+            );
             Ok(())
         }
         Err(err) if err.kind() == ErrorKind::InvalidInput => {
             // Print out enum's `message` feild.
             // e.g a port is invalid, and will capture
             // "invalid port value"
-            eprintln!("{}", err.to_string());
+            error!("{}", err.to_string());
             Ok(())
         }
         e => {
-            eprintln!("Unhandled exception: {e:#?}");
+            error!("Unhandled exception: {e:#?}");
             Ok(())
         }
     }

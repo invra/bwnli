@@ -1,16 +1,20 @@
 [workspace]
 resolver = "3"
-members = ["core", "config"]
+members = ["core", "config", "utility"]
 default-members = ["core"]
 
 [workspace.dependencies]
 axum = "0.8.9"
 toml = "1.1.2"
+tracing = "0.1.44"
 serde_json = "1.0"
 tungstenite = "0.29.0"
 
 [workspace.dependencies.config]
 path = "config"
+
+[workspace.dependencies.utility]
+path = "utility"
 
 [workspace.dependencies.serde]
 version = "1.0.228"

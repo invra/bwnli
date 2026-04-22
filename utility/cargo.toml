@@ -1,12 +1,10 @@
 [dependencies]
-toml.workspace = true
-serde.workspace = true
 tracing.workspace = true
 
 [package]
-name = "config"
+name = "utility"
 version = "0.1.0"
-description = "Config for bwnli"
+description = "Utilities for the Rust program"
 license = "Apache-2.0"
 readme = "README.md"
 keywords = ["utility"]
