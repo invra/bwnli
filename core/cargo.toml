@@ -8,7 +8,8 @@ tokio.workspace = true
 config.workspace = true
 tracing.workspace = true
 utility.workspace = true
-tungstenite.workspace = true
+futures-util.workspace = true
+tokio-tungstenite.workspace = true
 
 [package]
 name = "bitwig_nli"
