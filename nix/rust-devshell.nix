@@ -1,17 +1,13 @@
 {
+  trunk,
   mkShell,
-  rustc,
-  cargo,
-  rustfmt,
-  clippy,
-  rust-analyzer
+  rust-bin,
 }:
 mkShell {
   buildInputs = [
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
+    trunk
+    (rust-bin.stable.latest.complete.override {
+      targets = [ "wasm32-unknown-unknown" ];
+    })
   ];
 }
