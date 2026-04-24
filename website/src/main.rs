@@ -1,23 +1,23 @@
+mod router;
 mod ui;
-// mod pages;
+mod pages;
 
-use yew_router::prelude::*;
+use router::PageRegistration;
 use yew::prelude::*;
+use yew_router::prelude::*;
 
-#[derive(Clone, Routable, PartialEq)]
-pub enum Route {
-    #[at("/")]
-    Home,
-    #[not_found]
-    #[at("/404")]
-    NotFound,
-}
+#[function_component(Inner)]
+fn inner() -> Html {
+    let location = use_location().unwrap();
+    let path = location.path();
 
+    let matched = inventory::iter::<PageRegistration>
+        .into_iter()
+        .find(|p| p.path == path);
 
-fn switch(routes: Route) -> Html {
-    match routes {
-        Route::Home => html! { <h1>{ "Home" }</h1> },
-        Route::NotFound => html! { <h1>{ "404" }</h1> },
+    match matched {
+        Some(page) => (page.render)(),
+        None => html! { <h1>{"404"}</h1> },
     }
 }
 
@@ -25,7 +25,7 @@ fn switch(routes: Route) -> Html {
 fn app() -> Html {
     html! {
         <BrowserRouter>
-            <Switch<Route> render={switch} />
+            <Inner />
         </BrowserRouter>
     }
 }
