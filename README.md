@@ -1,33 +1,116 @@
-# Bitwig Studio NLI
+# Bitwig Studio Novation Launchpad Info
 
-Fancy tool which will use a extension to communicate MIDI info from Bitwig
-over to the Server, which then can display that info on a website to be able to be used
-on an OBS scene as an example.
+Tool which displays Bitwig Studio incoming MIDI information so you can use
+that information on an OBS Scene as an example. 
+
+## Support
+
+Tested on:
+- Linux (NixOS)
+- macOS (26 Tahoe using nix-darwin)
+
+Supports Bitwig 6.
+
+## What is the behind the scenes and what's needed?
+
+We in this project have 3 things:
+
+- Bitwig extension to get data from
+- Server to receive data and host;
+- Website which shows that information
+
+This won't get sent to external servers-
+it will only get sent to the one you specify & need to self-host.
 
 ## Structure
 
-Describes seperation of Kotlin side (ran though Bitwig's process) and the Rust side,
-which is our own process, which can we more dynamic, and be crashed, without Bitwig
+Information on separation of handling done by each side of this project
+and the outlines of how complex one thing is able to be. This is sorted
+so tasks that are important to happen in Bitwig are the only operations
+which happen in Bitwig, this keeps the app, and audio engine stable(er).
 
 ### Kotlin Handling
+The Kotlin side is intentionally kept minimal, this is to keep Bitwig's
+process as stable as possible, less susceptible to us crashing the app,
+or audio server. 
+If the Rust server crashes, Bitwig is unaffected.
 
-The Kotlin side of this will be kept to a minimum, to appoint all heavy-handling
-over to the Rust, which will allow for Bitwig to have least of a chance for us
-to crash it. So all we will do is:
-* Grab controller information
-* Setup a WS client to spell that to the WS server
+The extension will only:
+
+- Reads incoming controller data from Bitwig
+- Forwards it to the Rust server over a WebSocket connection
 
 ### Rust Handling
+The Rust side handles everything else:
 
-The Rust handing is pretty much everything you might think this program actually needs to run:
+- **Receiving MIDI data** — the Bitwig extension sends data here; 
+  the server parses it into native Rust types
+- **Hosting the web UI** — a local website that displays live device state
+- **WebSocket broadcasting** — pushes state updates to connected clients automatically
 
-* Getting the MIDI info
-    - Bitwig Extension side does the "real" getting
-    - We host a Server which the Extension sends their data to this
-    - Fill out all information in types which then the Rust code can use
-      without the nonsense of JSON, or remenance of ECMAScript.
-* Host a website which can be used to find, and display the device
-* WS Sockets to discuss the state of the device, automatically
+## Building the project(s)
+
+You have three (3) modules so we'll separate it out into multi-sections
+
+### Bitwig sender extension
+
+#### Dependencies
+
+- Kotlin (2.2.xx)
+- Java (17)
+- Gradle (not provided in the project because contributing is suggested through nix)
+
+#### Build command
+
+```
+  gradle build
+```
+
+This will actually build the Gradle project, and also install it in
+`Documents/Bitwig Studio/Extensions/<extension-name>.bwextension`
+
+### Website
+
+Currently with the extensive work to the server, it's not supported yet the way we want where
+the server will actually build the website- until then this is what you have to do
+
+#### Dependencies
+
+- rustup (mode=complete and `wasm32-unknown-unknown`)
+- trunk
+
+#### Build command
+
+```
+  trunk build --release
+```
+
+#### Execution command
+
+```
+  trunk serve --release
+```
+
+### Dispatch Server
+
+Requires the same Rust toolchain as the Website,
+just without trunk.
+
+#### Dependencies
+
+Uses some of dependencies from Website, so install them
+
+#### Build command
+
+```
+  cargo build --release
+```
+
+#### Execution command
+
+```
+  cargo run --release
+```
 
 ## License
 
