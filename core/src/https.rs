@@ -50,7 +50,7 @@ pub async fn start(address: Addr) -> Result<(), ()> {
             Ok(())
         }
         Err(err) if err.kind() == ErrorKind::InvalidInput => {
-            // Print out enum's `message` feild.
+            // Print out enum's `message` field.
             // e.g a port is invalid, and will capture
             // "invalid port value"
             error!("{}", err.to_string());
