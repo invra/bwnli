@@ -6,12 +6,12 @@ on an OBS scene as an example.
 
 ## Structure
 
-Describes seperation of Java side (ran though Bitwig's process) and the Rust side,
+Describes seperation of Kotlin side (ran though Bitwig's process) and the Rust side,
 which is our own process, which can we more dynamic, and be crashed, without Bitwig
 
-### Java Handling
+### Kotlin Handling
 
-The Java side of this will be kept to a minimum, to appoint all heavy-handling
+The Kotlin side of this will be kept to a minimum, to appoint all heavy-handling
 over to the Rust, which will allow for Bitwig to have least of a chance for us
 to crash it. So all we will do is:
 * Grab controller information
