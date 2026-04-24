@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["core", "config", "utility"]
+members = ["core", "config", "utility", "website"]
 default-members = ["core"]
 
 [workspace.dependencies]
