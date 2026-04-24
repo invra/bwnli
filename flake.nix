@@ -15,10 +15,10 @@
   {
     devShells = forAllSystems (system: let
       pkgs = import nixpkgs { inherit system overlays; };
-    in rec {
+    in {
       program = pkgs.callPackage ./nix/rust-devshell.nix {};
       bitwig = pkgs.callPackage ./nix/gradle-devshell.nix {};
-      default = program;
+      default = pkgs.callPackage ./nix/mega-devShell.nix {};
     });
 
     packages = forAllSystems (system: let
