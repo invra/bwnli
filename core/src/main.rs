@@ -7,7 +7,7 @@ async fn main() -> Result<(), ()> {
     tracing::subscriber::set_global_default(utility::logger::SimpleSubscriber).unwrap();
     let config = load_config();
 
-    tokio::join!(
+    _ = tokio::join!(
         https::start(config.servers.https.into()),
         ws::start(config.servers.websockets.into())
     );
