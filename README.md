@@ -58,7 +58,7 @@ You have three (3) modules so we'll separate it out into multi-sections
 
 - Kotlin (2.2.xx)
 - Java (17)
-- Gradle (not provided in the project because contributing is suggested through nix)
+- Gradle (not provided in the project because contributing is usually through nix)
 
 #### Build command
 
@@ -77,6 +77,7 @@ the server will actually build the website- until then this is what you have to 
 #### Dependencies
 
 - rustup (mode=complete and `wasm32-unknown-unknown`)
+- tailwindcss
 - trunk
 
 #### Build command

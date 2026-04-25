@@ -9,4 +9,4 @@ target/
 config.toml
 
 # web build artifcats
-dist/
+dist_website/
