@@ -10,3 +10,4 @@ config.toml
 
 # web build artifcats
 dist_website/
+*.html

@@ -77,19 +77,18 @@ the server will actually build the website- until then this is what you have to 
 #### Dependencies
 
 - rustup (mode=complete and `wasm32-unknown-unknown`)
-- tailwindcss
-- trunk
+- cargo-leptos
 
 #### Build command
 
 ```
-  trunk build --release
+   cargo leptos build --release
 ```
 
 #### Execution command
 
 ```
-  trunk serve --release
+  cargo leptos  --release
 ```
 
 ### Dispatch Server

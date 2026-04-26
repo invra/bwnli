@@ -3,7 +3,21 @@ name = "bwnli-website"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[build-dependencies]
+maud = "0.27.0"
+
 [dependencies]
-yew = { version = "0.23", features = ["csr"] }
-yew-router = "0.20.0"
+leptos_router = "0.8.13"
+wasm-bindgen = "=0.2.118"
 inventory = "0.3.24"
+stylist = "0.15.1"
+
+[dependencies.leptos]
+version = "0.8.19"
+features = ["csr"]
+
+[package.metadata.leptos]
+output-name = "website"

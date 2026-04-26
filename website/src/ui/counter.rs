@@ -1,30 +1,17 @@
-use yew::prelude::*;
+use leptos::prelude::*;
+use stylist::{Style, css};
 
 #[component]
-pub fn Counter() -> Html {
-    let counter = use_state(|| 0);
-    let increment = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter + 1;
-            counter.set(value);
-        }
-    };
-    let decrement = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter - 1;
-            counter.set(value);
-        }
-    };
+pub fn Counter() -> impl IntoView {
+    let (value, set_value) = signal(0);
+    let btn_wide = Style::new(css!("min-width: 200px;")).unwrap();
+    let button_class = format!("btn btn-primary {}", btn_wide.get_class_name());
 
-    html! {
-        <div class="min-h-screen flex flex-col gap-6 justify-center items-center">
-            <p class="text-center text-6xl">{ *counter }</p>
-            <div class="flex flex-col gap-1">
-                <button class="bg-blue-500 py-2 px-5 min-w-60 text-gray-200 rounded-md" onclick={decrement}>{ "-" }</button>
-                <button class="bg-blue-500 py-2 px-5 min-w-60 text-gray-200 rounded-md" onclick={increment}>{ "+" }</button>
-            </div>
+    view! {
+        <div class="d-flex flex-column gap-2 justify-content-center align-items-center vh-100">
+            <p class="display-1 text-center">{value}</p>
+            <button class={button_class.clone()} on:click=move |_| set_value.update(|v| *v -= 1)>{ "-" }</button>
+            <button class={button_class.clone()} on:click=move |_| set_value.update(|v| *v += 1)>{ "+" }</button>
         </div>
     }
 }
