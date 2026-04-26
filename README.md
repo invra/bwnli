@@ -77,18 +77,19 @@ the server will actually build the website- until then this is what you have to 
 #### Dependencies
 
 - rustup (mode=complete and `wasm32-unknown-unknown`)
+- trunk
 - cargo-leptos
 
 #### Build command
 
 ```
-   cargo leptos build --release
+   trunk build --release
 ```
 
 #### Execution command
 
 ```
-  cargo leptos  --release
+  trunk serve --release
 ```
 
 ### Dispatch Server
